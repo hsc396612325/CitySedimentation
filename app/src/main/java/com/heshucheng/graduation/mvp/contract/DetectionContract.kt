@@ -1,5 +1,7 @@
 package com.heshucheng.graduation.mvp.contract
 
+import com.heshucheng.graduation.bean.ProvinceInfoData
+import com.heshucheng.graduation.bean.detection.LocationBean
 import com.heshucheng.graduation.mvp.base.BasePresenter
 import com.heshucheng.graduation.mvp.base.BaseView
 
@@ -9,13 +11,14 @@ import com.heshucheng.graduation.mvp.base.BaseView
 interface DetectionContract{
 
     interface View :BaseView<Presenter>{
-
+        fun showLocation(locationBean :LocationBean)
+        fun showFault()
+        fun showProvinceData( ProvinceInfoDataItem: ArrayList<ProvinceInfoData>)
     }
 
     interface Presenter: BasePresenter {
-        fun requestProvince(url : String)
-        fun requestCity(url : String)
-        fun requestCounty(url : String)
+        fun requestProvinceData()
+        fun requestLocation()
     }
 
 }

@@ -1,5 +1,6 @@
 package com.heshucheng.graduation
 
+import android.Manifest
 import android.content.Context
 import android.graphics.Color
 import android.graphics.Typeface
@@ -11,6 +12,9 @@ import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.Toast
+import com.baidu.mapapi.SDKInitializer
+import com.yanzhenjie.permission.AndPermission
+import com.yanzhenjie.permission.PermissionListener
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.tabview.view.*
 import kotlinx.android.synthetic.main.toolbar.*
@@ -25,14 +29,41 @@ class MainActivity : AppCompatActivity() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
+
         setContentView(R.layout.activity_main)
+       initPermission()
         initToolbar()
         initView()
+        SDKInitializer.initialize(getApplicationContext())
     }
+
+    private fun initPermission() {
+        AndPermission.with(this)
+                .requestCode(100)
+                .permission(
+                        Manifest.permission.ACCESS_COARSE_LOCATION,
+                        Manifest.permission.ACCESS_FINE_LOCATION,
+                        Manifest.permission.READ_EXTERNAL_STORAGE,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE
+                )
+                .callback(object : PermissionListener{
+                    override fun onSucceed(requestCode: Int, grantPermissions: List<String>) {
+
+                    }
+
+                    override fun onFailed(requestCode: Int, deniedPermissions: List<String>) {
+                        Toast.makeText(App.context,"未赋予定位权限，定位功能无法正常使用",Toast.LENGTH_SHORT).show()
+                    }
+                })
+                .start()
+
+}
+
     private fun initToolbar() {
-        toolbarTitle.text = "open eyes"
-        toolbar.inflateMenu(R.menu.toolbar_item)
+        toolbarTitle.text = "tpplbar"
+
         toolbar.setBackgroundColor(Color.WHITE)
         toolbar.setTitleTextColor(Color.BLACK)
         toolbarTitle.setTextColor(Color.BLACK)
@@ -45,9 +76,9 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun onToolbarSelected(position: Int){  //改变toolbar
-        when(position){
-            0 ->{toolbar.menu.getItem(0).setIcon(R.mipmap.ic_action_search)
+    private fun onToolbarSelected(position: Int) {  //改变toolbar
+        when (position) {
+            0 -> {
                 toolbar.background.alpha = 0
                 toolbarTitle.text = "detection"
                 toolbar.title = "检测区域"
@@ -55,7 +86,7 @@ class MainActivity : AppCompatActivity() {
                     // toast("6666")
                 }
             }
-            1 ->{ toolbar.menu.getItem(0).setIcon(R.mipmap.ic_action_search)
+            1 -> {
                 toolbar.background.alpha = 255
                 toolbarTitle.text = "sedimentation"
                 toolbar.title = "沉降信息"
@@ -63,7 +94,7 @@ class MainActivity : AppCompatActivity() {
                     //startActivity<CategoryActivity>()
                 }
             }
-            2 ->{toolbar.menu.getItem(0).setIcon(R.mipmap.ic_action_search)
+            2 -> {
                 toolbar.background.alpha = 255
                 toolbarTitle.text = "My"
                 toolbar.title = "我的信息"
@@ -73,13 +104,14 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
-    private fun initView(){
+
+    private fun initView() {
 
         mainTabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
                 onTabItemSelected(tab.position)  //加载fragment
                 // Tab 选中之后，改变各个Tab的状态
-                for (i in 0 until mainTabLayout.tabCount ) {
+                for (i in 0 until mainTabLayout.tabCount) {
                     val view = mainTabLayout.getTabAt(i)!!.customView
 
                     if (i == tab.position) { // 选中状态
@@ -102,7 +134,7 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
-        for(i in 0..2) {
+        for (i in 0..2) {
             mainTabLayout.addTab(mainTabLayout.newTab().setCustomView(getTabView(this, i)))
         }
     }
@@ -113,7 +145,8 @@ class MainActivity : AppCompatActivity() {
         view.tabContentText.text = MainData.mainTabStr[position]
         return view
     }
-    fun onTabItemSelected(position: Int){
+
+    fun onTabItemSelected(position: Int) {
 //        val transaction = fragmentManager.beginTransaction()
         val transaction = supportFragmentManager.beginTransaction()//v4 使用supportFragmentManager
         /*when(position){

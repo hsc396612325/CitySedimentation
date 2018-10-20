@@ -15,11 +15,11 @@ import com.heshucheng.graduation.mvp.presenter.SedimentationPresenter
 class SedimentationFragment:Fragment(),SedimentationContract.View{
     private val presenter :SedimentationPresenter = SedimentationPresenter(this);
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater?.inflate(R.layout.fragment_sedimentation,container,false)
     }
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
     }
 }
