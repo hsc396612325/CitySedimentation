@@ -1,5 +1,6 @@
-package com.heshucheng.graduation
+package com.heshucheng.graduation.utiles
 
+import com.heshucheng.graduation.R
 import com.heshucheng.graduation.fragment.DetectionFragment
 import com.heshucheng.graduation.fragment.MineFragment
 import com.heshucheng.graduation.fragment.SedimentationFragment

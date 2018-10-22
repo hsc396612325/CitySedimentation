@@ -3,19 +3,19 @@ package com.heshucheng.graduation.mvp.model
 import android.content.Context
 import android.util.Log
 import com.baidu.location.*
+import com.baidu.mapapi.model.LatLng
+import com.baidu.mapapi.search.sug.SuggestionResult
+import com.baidu.mapapi.search.sug.SuggestionSearch
+import com.baidu.mapapi.search.sug.SuggestionSearchOption
 import com.google.gson.Gson
-import com.heshucheng.graduation.bean.db.City
-import com.heshucheng.graduation.bean.db.County
-import com.heshucheng.graduation.bean.db.Province
-import com.heshucheng.graduation.io_main
-import com.heshucheng.graduation.net.NetWork
 import io.reactivex.Observable
-import com.heshucheng.graduation.App
-import com.heshucheng.graduation.App.Companion.context
+import com.heshucheng.graduation.utiles.App
 import com.heshucheng.graduation.bean.ProvinceInfoData
 
 import com.heshucheng.graduation.bean.detection.LocationBean
-import io.reactivex.ObservableEmitter
+import com.heshucheng.graduation.RxjavaObservable.BaiduLocationObservable
+import com.heshucheng.graduation.RxjavaObservable.BaiduSuggestionbservable
+import com.heshucheng.graduation.bean.MarkerBeas
 import io.reactivex.ObservableOnSubscribe
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -28,9 +28,11 @@ import java.io.InputStreamReader
 /**
  * Created by heshu on 2018/10/18.
  */
+
 class DetectionModel {
     private val mLocationClient: LocationClient = LocationClient(App.context)
-
+    private val mSuggestionSearch = SuggestionSearch.newInstance()
+    //定位初始化
     init {
         val option = LocationClientOption()
         option.isOpenGps = true // 打开gps
@@ -48,7 +50,8 @@ class DetectionModel {
         return Observable
                 .create(ObservableOnSubscribe<ArrayList<ProvinceInfoData>> { e ->
                     val str = getJson("Province.Json", App.context!!) //读取本地数据
-                    val detail: ArrayList<ProvinceInfoData> = parseJsonData(str) //解析json
+                    val detail: ArrayList<ProvinceInfoData> = parseJsonData(str) //解析json890-=
+
                     e.onNext(detail)
                 })
                 .subscribeOn(Schedulers.newThread())
@@ -57,29 +60,33 @@ class DetectionModel {
 
     }
 
-    fun loadlocation(): Observable<LocationBean> {
-
-        return Observable.create({ e ->
-            mLocationClient.start()
-            mLocationClient.registerLocationListener({ location ->
-                val locationBean = LocationBean(
-                        location.latitude,
-                        location.longitude,
-                        location.radius,
-                        location.province,
-                        location.city,
-                        location.district,
-                        location.street
-                )
-                e.onNext(locationBean)
-                mLocationClient.stop() //关闭定位
-                e.onComplete()
-            })
-        })
+    //获取定位坐标
+    fun loadLocation(): Observable<LocationBean> {
+        return BaiduLocationObservable(mLocationClient)  //使用Rxjava对百度回调的接口进行了包装
     }
 
+    //搜索联想
+    fun loadSug(sug : String): Observable<SuggestionResult>{
 
-    private fun getJson(fileName: String, context: Context): String { //读取文件中的数据
+
+        return BaiduSuggestionbservable(sug) //使用Rxjava对百度sug的接口进行了包装
+    }
+
+    //获取标记点
+    fun loadMark() :Observable<List<MarkerBeas>>{
+        return Observable
+                .create({ e ->
+                    var marks =  ArrayList<MarkerBeas>();
+                    for(i in 0..3){
+                        var mark = MarkerBeas(LatLng(34.1609+i, 108.9109+i),i%2==0)
+                        marks.add(mark)
+                    }
+                    e.onNext(marks)
+                })
+    }
+
+    //读取文件中的数据
+    private fun getJson(fileName: String, context: Context): String {
         //将json数据变成字符串
         val stringBuilder = StringBuilder()
         try {
@@ -102,6 +109,7 @@ class DetectionModel {
         return stringBuilder.toString()
     }
 
+    //解析Json数据
     private fun parseJsonData(result: String): ArrayList<ProvinceInfoData> {
         val detail: ArrayList<ProvinceInfoData> = ArrayList<ProvinceInfoData>()
 

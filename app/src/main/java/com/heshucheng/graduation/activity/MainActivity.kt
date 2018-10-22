@@ -1,4 +1,4 @@
-package com.heshucheng.graduation
+package com.heshucheng.graduation.activity
 
 import android.Manifest
 import android.content.Context
@@ -13,6 +13,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.Toast
 import com.baidu.mapapi.SDKInitializer
+import com.heshucheng.graduation.utiles.App
+import com.heshucheng.graduation.utiles.MainData
+import com.heshucheng.graduation.R
 import com.yanzhenjie.permission.AndPermission
 import com.yanzhenjie.permission.PermissionListener
 import kotlinx.android.synthetic.main.activity_main.*

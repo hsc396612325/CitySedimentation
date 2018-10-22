@@ -5,4 +5,3 @@ package com.heshucheng.graduation.bean
  */
 data class ProvinceInfoData(val name: String, var city: ArrayList<CityInfoModel>?)
 data class CityInfoModel(val name: String, var area: ArrayList<String>)
-data class DistrictInfoModel(val name: String)

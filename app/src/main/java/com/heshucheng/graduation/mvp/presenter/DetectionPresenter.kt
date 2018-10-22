@@ -24,9 +24,31 @@ class DetectionPresenter(view: DetectionContract.View) : DetectionContract.Prese
 
 
     override fun requestLocation() {
-        detectionModel.loadlocation()
+        detectionModel.loadLocation()
                 .subscribe({ it ->
-                    detectionView.showLocation(it)
+                    detectionView.acquireLocation(it)
+                }, { e ->
+                    detectionView.showFault()
+                })
+    }
+
+    override fun requestSug(sug :String) {
+        detectionModel.loadSug(sug)
+                .subscribe({ it ->
+                    if(it!=null) {
+                        detectionView.showSug(it)
+                    }
+                }, { e ->
+                    detectionView.showFault()
+                })
+    }
+
+    override fun requestMaker() {
+        detectionModel.loadMark()
+                .subscribe({ it ->
+                    if(it!=null) {
+                        detectionView.showMarker(it)
+                    }
                 }, { e ->
                     detectionView.showFault()
                 })
