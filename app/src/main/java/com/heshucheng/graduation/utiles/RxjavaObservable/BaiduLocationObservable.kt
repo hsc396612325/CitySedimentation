@@ -1,4 +1,4 @@
-package com.heshucheng.graduation.RxjavaObservable
+package com.heshucheng.graduation.utiles.RxjavaObservable
 
 import com.baidu.location.BDLocation
 import com.baidu.location.BDLocationListener

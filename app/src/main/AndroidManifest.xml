@@ -15,19 +15,23 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
+    <!-- To auto-complete the email text field in the login form with the user's emails -->
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.READ_PROFILE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+
     <application
         android:name=".utiles.App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <service
             android:name="com.baidu.location.f"
             android:enabled="true"
             android:process=":remote" />
-
 
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
@@ -41,17 +45,20 @@
             </intent-filter>
         </activity>
 
-        <receiver android:name=".MyWidgetProvider">
+        <receiver android:name=".View.MyWidgetProvider">
             <meta-data
                 android:name="android.appwidget.provider"
                 android:resource="@xml/appwidget_info" />
 
             <intent-filter>
-                <action android:name="com.heshucheng.heshucheng.click_action" />
+                <action android:name="com.heshucheng.graduation.click_action" />
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
         </receiver>
 
+        <activity android:name=".activity.LoginActivity" />
+        <activity android:name=".activity.RegisterActivity" />
+        <activity android:name=".activity.Main2Activity"></activity>
     </application>
 
 </manifest>

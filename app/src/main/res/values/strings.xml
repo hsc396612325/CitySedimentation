@@ -1,10 +1,22 @@
 <resources>
     <string name="app_name">建筑物沉降监测</string>
-    <string name="splash_text_en">Daily appetizer for your eyes. Bon eyepetit.</string>
-    <string name="splash_text">每日精选视频推荐，让你大开眼界</string>
-    <string name="textFooter">更 多 开 眼 编 辑 精 选</string>
 
-    <!--播放页面-->
-    <string name="offline_text">缓存</string>
-    <string name="default_num">0</string>
+    <string name="prompt_phone">手机号</string>
+    <string name="prompt_password">密码</string>
+    <string name="action_sign_in">登录</string>
+    <string name="action_sign_in_short">注册</string>
+    <string name="error_invalid_phone">手机号无效</string>
+    <string name="error_invalid_password">这个密码太短了</string>
+    <string name="error_incorrect_password">手机号或者密码错误</string>
+    <string name="error_field_required">必须要填</string>
+
+    <string name="title_activity_login">Sign in</string>
+    <string name="title_activity_login2">Sign in</string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email
+        completions."
+    </string>
 </resources>

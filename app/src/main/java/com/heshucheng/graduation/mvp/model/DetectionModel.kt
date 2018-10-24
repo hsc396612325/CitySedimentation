@@ -6,15 +6,14 @@ import com.baidu.location.*
 import com.baidu.mapapi.model.LatLng
 import com.baidu.mapapi.search.sug.SuggestionResult
 import com.baidu.mapapi.search.sug.SuggestionSearch
-import com.baidu.mapapi.search.sug.SuggestionSearchOption
 import com.google.gson.Gson
 import io.reactivex.Observable
 import com.heshucheng.graduation.utiles.App
 import com.heshucheng.graduation.bean.ProvinceInfoData
 
 import com.heshucheng.graduation.bean.detection.LocationBean
-import com.heshucheng.graduation.RxjavaObservable.BaiduLocationObservable
-import com.heshucheng.graduation.RxjavaObservable.BaiduSuggestionbservable
+import com.heshucheng.graduation.utiles.RxjavaObservable.BaiduLocationObservable
+import com.heshucheng.graduation.utiles.RxjavaObservable.BaiduSuggestionbservable
 import com.heshucheng.graduation.bean.MarkerBeas
 import io.reactivex.ObservableOnSubscribe
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -78,7 +77,7 @@ class DetectionModel {
                 .create({ e ->
                     var marks =  ArrayList<MarkerBeas>();
                     for(i in 0..3){
-                        var mark = MarkerBeas(LatLng(34.1609+i, 108.9109+i),i%2==0)
+                        var mark = MarkerBeas(LatLng(34.16096+i*0.1, 108.912437+i*0.1),i%2==0)
                         marks.add(mark)
                     }
                     e.onNext(marks)

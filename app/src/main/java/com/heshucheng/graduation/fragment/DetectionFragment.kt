@@ -151,7 +151,7 @@ class DetectionFragment : Fragment(), DetectionContract.View {
 
     //显示数据错误
     override fun showFault() {
-        Toast.makeText(App.context, "数据请求失败", Toast.LENGTH_SHORT).show()
+        //Toast.makeText(App.context, "数据请求失败", Toast.LENGTH_SHORT).show()
     }
 
     //加载省市区的数据
@@ -245,6 +245,7 @@ class DetectionFragment : Fragment(), DetectionContract.View {
     }
 
 
+    //标记点弹窗
     private fun showDialog() {
         val layoutInflater = LayoutInflater.from(this.context)
         val contentView = layoutInflater.inflate(R.layout.fragment_detection_dialog, null)
@@ -278,7 +279,6 @@ class DetectionFragment : Fragment(), DetectionContract.View {
                     .position(mark.latLne)
                     .icon(if (mark.normal) bdN else bdW);
             options.add(option)
-
         }
         mBaiduMap?.addOverlays(options)
 

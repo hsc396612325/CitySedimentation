@@ -16,6 +16,8 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:windowBackground">@color/windowBg</item>
         <item name="android:textColor">@color/colorDefaultText</item>
+
+        <item name="colorControlNormal">@color/colorTextGrey</item>
     </style>
 
 </resources>

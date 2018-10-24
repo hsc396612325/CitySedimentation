@@ -1,14 +1,10 @@
-package com.heshucheng.graduation.RxjavaObservable
+package com.heshucheng.graduation.utiles.RxjavaObservable
 
 import android.util.Log
-import com.baidu.location.BDLocation
-import com.baidu.location.BDLocationListener
-import com.baidu.location.LocationClient
 import com.baidu.mapapi.search.sug.OnGetSuggestionResultListener
 import com.baidu.mapapi.search.sug.SuggestionResult
 import com.baidu.mapapi.search.sug.SuggestionSearch
 import com.baidu.mapapi.search.sug.SuggestionSearchOption
-import com.heshucheng.graduation.bean.detection.LocationBean
 import io.reactivex.Observable
 import io.reactivex.Observer
 import io.reactivex.android.MainThreadDisposable

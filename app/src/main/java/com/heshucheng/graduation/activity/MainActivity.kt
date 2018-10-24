@@ -82,7 +82,7 @@ class MainActivity : AppCompatActivity() {
     private fun onToolbarSelected(position: Int) {  //改变toolbar
         when (position) {
             0 -> {
-                toolbar.background.alpha = 0
+                toolbar.background.alpha = 125
                 toolbarTitle.text = "detection"
                 toolbar.title = "检测区域"
                 toolbar.setOnClickListener {
