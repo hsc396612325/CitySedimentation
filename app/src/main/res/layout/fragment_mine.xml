@@ -11,102 +11,28 @@
         android:layout_height="120dp"
         android:alpha="0.5">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            tools:ignore="UselessParent">
-
-            <ImageView
-                android:id="@+id/iv_head"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_gravity="center"
-                android:src="@mipmap/ic_head_portrait"
-                tools:ignore="ContentDescription" />
-
-        </LinearLayout>
-
     </FrameLayout>
 
+
+
+    <!--<View-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="0.5dp"-->
+        <!--android:background="@android:color/darker_gray" />-->
+
     <TextView
-        android:id="@+id/tv_head"
+        android:id="@+id/tv_setting"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:gravity="center"
-        android:text="点击登录"
-        android:textColor="@android:color/darker_gray"
+        android:layout_height="50dp"
+        android:layout_marginTop="50dp"
+        android:gravity="bottom|center_horizontal"
+        android:text="进行设置"
+        android:textSize="14sp"
         tools:ignore="HardcodedText" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginTop="10dp">
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            tools:ignore="UseCompoundDrawables">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:ignore="ContentDescription" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="15dp"
-                android:gravity="center"
-                android:text="xx"
-                android:textColor="@android:color/darker_gray"
-                tools:ignore="HardcodedText,RtlHardcoded" />
-        </LinearLayout>
-
-        <View
-            android:layout_width="0.5dp"
-            android:layout_height="30dp"
-            android:layout_gravity="center_vertical"
-            android:background="@android:color/darker_gray">
-
-        </View>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            tools:ignore="UseCompoundDrawables">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:ignore="ContentDescription" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="15dp"
-                android:gravity="center"
-                android:text="XX"
-                android:textColor="@android:color/darker_gray"
-                tools:ignore="HardcodedText,RtlHardcoded" />
-        </LinearLayout>
-    </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="@android:color/darker_gray" />
-
     <TextView
         android:id="@+id/tv_save"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_marginTop="50dp"
         android:gravity="bottom|center_horizontal"
         android:text="关于我们"
         android:textSize="14sp"

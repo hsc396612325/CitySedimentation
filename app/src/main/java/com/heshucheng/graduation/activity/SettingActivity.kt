@@ -29,9 +29,9 @@ import kotlinx.android.synthetic.main.toolbar.*
 import java.util.regex.Pattern
 
 /**
- * A login screen that offers login via phone/password.
+ *登录的activity
  */
-class LoginActivity : AppCompatActivity() {
+class SettingActivity : AppCompatActivity() {
 
 
     /**
@@ -60,8 +60,8 @@ class LoginActivity : AppCompatActivity() {
         toolbarTitle.setTextColor(Color.BLACK)
         toolbarTitle.typeface = Typeface.createFromAsset(this.assets, "fonts/Lobster-1.4.otf")
         toolbar.background.alpha = 255
-        toolbarTitle.text = "login"
-        toolbar.title = "登录"
+        toolbarTitle.text = "Setting"
+        toolbar.title = "设置"
     }
 
     private fun initView() {
@@ -77,49 +77,14 @@ class LoginActivity : AppCompatActivity() {
 
         phone_sign_in_button.setOnClickListener { attemptLogin() }
 
-        phone_register_button.setOnClickListener({ v ->
-            val intent = Intent(this, RegisterActivity::class.java)
-            startActivity(intent)
-        })
+//        phone_register_button.setOnClickListener({ v ->
+//            val intent = Intent(this, RegisterActivity::class.java)
+//            startActivity(intent)
+//        })
     }
 
     private fun attemptLogin() {
 
-        // Reset errors.
-        mPhoneView!!.error = null
-        mPasswordView!!.error = null
-
-        // Store values at the time of the login attempt.
-        val phone = mPhoneView!!.text.toString()
-        val password = mPasswordView!!.text.toString()
-
-        var cancel = false
-        var focusView: View? = null
-
-
-        //检查一个有效的电话地址。
-        if (TextUtils.isEmpty(phone)) {
-            mPhoneView!!.error = getString(R.string.error_field_required)
-            focusView = mPhoneView
-            cancel = true
-        } else if (!isPhoneValid(phone)) {
-            mPhoneView!!.error = getString(R.string.error_invalid_phone)
-            focusView = mPhoneView
-            cancel = true
-        }
-
-        if (cancel) {
-            //有一个错误;不要尝试登录，并将第一个表单字段以错误的方式集中。
-            focusView!!.requestFocus()
-        } else {
-            // showProgress(true);
-        }
-    }
-
-    private fun isPhoneValid(phone: String): Boolean { //判断是否为手机号
-        //TODO: Replace this with your own logic
-        val pattern = Pattern.compile("[0-9]*")
-        return phone.length == 11 && pattern.matcher(phone).matches()
     }
 
 }

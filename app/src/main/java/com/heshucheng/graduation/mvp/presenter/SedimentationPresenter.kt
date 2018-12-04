@@ -10,4 +10,6 @@ import com.heshucheng.graduation.mvp.model.SedimentationModel
 class SedimentationPresenter(view: SedimentationContract.View) : SedimentationContract.Presenter {
     private val sedimentationView: SedimentationContract.View = view
     private val sedimentationModel by lazy {  SedimentationModel() }
+
+
 }

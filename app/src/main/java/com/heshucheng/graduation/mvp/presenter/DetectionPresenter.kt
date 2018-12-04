@@ -3,6 +3,7 @@ package com.heshucheng.graduation.mvp.presenter
 import android.util.Log
 import com.heshucheng.graduation.mvp.contract.DetectionContract
 import com.heshucheng.graduation.mvp.model.DetectionModel
+import io.reactivex.disposables.CompositeDisposable
 
 /**
  * Created by heshu on 2018/10/18.
@@ -10,14 +11,15 @@ import com.heshucheng.graduation.mvp.model.DetectionModel
 class DetectionPresenter(view: DetectionContract.View) : DetectionContract.Presenter {
     private val detectionView: DetectionContract.View = view
     private val detectionModel by lazy { DetectionModel() }
-
+    private val compositeDisposable = CompositeDisposable()
     override fun requestProvinceData() {
-        detectionModel.loadProvinceData()
+       detectionModel.loadProvinceData()
                 .subscribe({ it ->
+                    Log.d("数据", "" + it)
                     detectionView.showProvinceData(it)
-                    Log.d("数据",""+it)
+
                 }, { e ->
-                    Log.e("错误",""+e)
+                    Log.e("错误", "" + e)
                     detectionView.showFault()
                 })
     }
@@ -32,10 +34,10 @@ class DetectionPresenter(view: DetectionContract.View) : DetectionContract.Prese
                 })
     }
 
-    override fun requestSug(sug :String) {
+    override fun requestSug(sug: String) {
         detectionModel.loadSug(sug)
                 .subscribe({ it ->
-                    if(it!=null) {
+                    if (it != null) {
                         detectionView.showSug(it)
                     }
                 }, { e ->
@@ -46,11 +48,13 @@ class DetectionPresenter(view: DetectionContract.View) : DetectionContract.Prese
     override fun requestMaker() {
         detectionModel.loadMark()
                 .subscribe({ it ->
-                    if(it!=null) {
+                    if (it != null) {
                         detectionView.showMarker(it)
                     }
                 }, { e ->
                     detectionView.showFault()
                 })
     }
+
+
 }

@@ -14,5 +14,5 @@ object MainData {
             R.mipmap.ic_tab_follow)
     val mainTabResPressed = listOf(R.mipmap.ic_tab_home_selected, R.mipmap.ic_tab_find_selected,
             R.mipmap.ic_tab_follow_selected)
-    val mainTabStr = listOf("检测", "信息", "我的")
+    val mainTabStr = listOf("检测", "信息", "设置")
 }

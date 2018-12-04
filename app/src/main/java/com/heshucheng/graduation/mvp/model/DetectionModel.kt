@@ -50,7 +50,8 @@ class DetectionModel {
                 .create(ObservableOnSubscribe<ArrayList<ProvinceInfoData>> { e ->
                     val str = getJson("Province.Json", App.context!!) //读取本地数据
                     val detail: ArrayList<ProvinceInfoData> = parseJsonData(str) //解析json890-=
-
+                    Log.d("aaaaa",""+str)
+                    Log.d("aaaaa",""+detail)
                     e.onNext(detail)
                 })
                 .subscribeOn(Schedulers.newThread())

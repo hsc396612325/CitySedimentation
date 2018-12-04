@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.support.design.widget.TabLayout
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
@@ -39,6 +40,7 @@ class MainActivity : AppCompatActivity() {
        initPermission()
         initToolbar()
         initView()
+        Log.d("sss","ss"+getApplicationContext());
         SDKInitializer.initialize(getApplicationContext())
     }
 
@@ -99,8 +101,8 @@ class MainActivity : AppCompatActivity() {
             }
             2 -> {
                 toolbar.background.alpha = 255
-                toolbarTitle.text = "My"
-                toolbar.title = "我的信息"
+                toolbarTitle.text = "regard"
+                toolbar.title = "关于"
                 toolbar.setOnClickListener {
                     // startActivity<PgcsAllActivity>()
                 }

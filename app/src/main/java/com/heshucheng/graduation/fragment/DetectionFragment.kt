@@ -40,10 +40,11 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.android.synthetic.main.fragment_detection_seek.*
 import java.util.*
 import java.util.concurrent.TimeUnit
+import kotlin.collections.ArrayList
 
 
 /**
- * Created by heshu on 2018/10/18.
+ * 主界面的
  */
 
 class DetectionFragment : Fragment(), DetectionContract.View {
@@ -56,7 +57,6 @@ class DetectionFragment : Fragment(), DetectionContract.View {
     private val options1Items = ArrayList<String>()
     private val options2Items = ArrayList<ArrayList<String>>()
     private val options3Items = ArrayList<ArrayList<ArrayList<String>>>()
-
 
     private var recyclerView: RecyclerView? = null
     private val recyclerList = ArrayList<String>()
@@ -87,13 +87,15 @@ class DetectionFragment : Fragment(), DetectionContract.View {
 
 
         RxView.clicks(cvLocation)
-                .throttleFirst(1, TimeUnit.SECONDS) //功能防抖，即2s内只发送第1次点击按钮的事件
+                .throttleFirst(1, TimeUnit.SECONDS) //功能防抖，即1s内只发送第1次点击按钮的事件
                 .subscribe({ e ->
                     presenter.requestLocation()
                 })
 
         iv_select.setOnClickListener({ v ->
+            Log.e("ssss","ssss")
             pvOptions?.show() //打开省市区选择器
+
         })
 
         iv_seek.setOnClickListener({ v ->
@@ -102,7 +104,7 @@ class DetectionFragment : Fragment(), DetectionContract.View {
 
         mBaiduMap?.setOnMarkerClickListener(object : BaiduMap.OnMarkerClickListener {
             override fun onMarkerClick(p0: Marker?): Boolean {
-                Log.d("1111","1111")
+                Log.d("1111", "1111")
                 showDialog()
                 return false
             }
@@ -156,6 +158,7 @@ class DetectionFragment : Fragment(), DetectionContract.View {
 
     //加载省市区的数据
     override fun showProvinceData(ProvinceInfoDataItem: ArrayList<ProvinceInfoData>) {
+        Log.d("AAAA",""+ProvinceInfoDataItem);
         for (p in ProvinceInfoDataItem) {
             options1Items.add(p.name)
             var clist = ArrayList<String>()
@@ -258,6 +261,7 @@ class DetectionFragment : Fragment(), DetectionContract.View {
         popupWindow.showAtLocation(activity.getWindow().getDecorView(), Gravity.CENTER, 0, 0);
 
     }
+
     //显示搜索结果
     override fun showSug(res: SuggestionResult) {
         Res = res
@@ -283,4 +287,7 @@ class DetectionFragment : Fragment(), DetectionContract.View {
         mBaiduMap?.addOverlays(options)
 
     }
+
+
 }
+

@@ -56,9 +56,9 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".activity.LoginActivity" />
+        <activity android:name=".activity.SettingActivity" />
         <activity android:name=".activity.RegisterActivity" />
-        <activity android:name=".activity.Main2Activity"></activity>
+
     </application>
 
 </manifest>
