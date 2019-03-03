@@ -158,7 +158,7 @@ class MainActivity : AppCompatActivity() {
             0 -> transaction.replace(R.id.main_container, HomeFragment()).commit()
             1 -> transaction.replace(R.id.main_container, DiscoverFragment()).commit()
             2 -> transaction.replace(R.id.main_container, FollowFragment()).commit()
-            3 -> transaction.replace(R.id.main_container, MineFragment()).commit()
+            3 -> transaction.replace(R.id.main_container, SettingFragment()).commit()
         }*/
         transaction.replace(R.id.mainContainer, MainData.mainFragmentList[position] as Fragment?).commit()
         onToolbarSelected(position)

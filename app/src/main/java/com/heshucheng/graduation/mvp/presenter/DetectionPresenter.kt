@@ -11,18 +11,18 @@ import io.reactivex.disposables.CompositeDisposable
 class DetectionPresenter(view: DetectionContract.View) : DetectionContract.Presenter {
     private val detectionView: DetectionContract.View = view
     private val detectionModel by lazy { DetectionModel() }
-    private val compositeDisposable = CompositeDisposable()
-    override fun requestProvinceData() {
-       detectionModel.loadProvinceData()
-                .subscribe({ it ->
-                    Log.d("数据", "" + it)
-                    detectionView.showProvinceData(it)
 
-                }, { e ->
-                    Log.e("错误", "" + e)
-                    detectionView.showFault()
-                })
-    }
+//    override fun requestProvinceData() {
+//       detectionModel.loadProvinceData()
+//                .subscribe({ it ->
+//
+//                    detectionView.showProvinceData(it)
+//
+//                }, { e ->
+//                    Log.e("错误", "" + e)
+//                    detectionView.showFault()
+//                })
+//    }
 
 
     override fun requestLocation() {
@@ -34,22 +34,36 @@ class DetectionPresenter(view: DetectionContract.View) : DetectionContract.Prese
                 })
     }
 
-    override fun requestSug(sug: String) {
-        detectionModel.loadSug(sug)
+//    override fun requestSug(sug: String) {
+//        detectionModel.loadSug(sug)
+//                .subscribe({ it ->
+//                    if (it != null) {
+//                        detectionView.showSug(it)
+//                    }
+//                }, { e ->
+//                    detectionView.showFault()
+//                })
+//    }
+//
+
+    override fun requestArea(apiKay:String?) {
+        detectionModel.getArea(apiKay)
                 .subscribe({ it ->
                     if (it != null) {
-                        detectionView.showSug(it)
+                        Log.d("aaaa区域",""+it.data.devices[1].tags[1])
+                        detectionView.showArea(it)
                     }
                 }, { e ->
-                    detectionView.showFault()
+                    detectionView.showApiKeyFault()
                 })
     }
 
-    override fun requestMaker() {
-        detectionModel.loadMark()
+    override fun requestEquipment(apiKay:String?,tag:String){
+        detectionModel.getEquipment(apiKay,tag)
                 .subscribe({ it ->
                     if (it != null) {
-                        detectionView.showMarker(it)
+                        detectionView.showEquipment(it)
+                        Log.d("aaaa设备",""+it.data.devices[0].id);
                     }
                 }, { e ->
                     detectionView.showFault()

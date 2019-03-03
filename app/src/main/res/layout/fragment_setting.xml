@@ -26,11 +26,10 @@
             android:textColorHint="@color/colorTextGrey">
 
             <AutoCompleteTextView
-                android:id="@+id/phone"
+                android:id="@+id/api_key"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="API_KEY"
-                android:inputType="phone"
                 android:maxLines="1"
                 android:singleLine="true"
                 android:textColor="#000000"
@@ -39,33 +38,13 @@
 
         </android.support.design.widget.TextInputLayout>
 
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColorHint="@color/colorTextGrey"
-            app:passwordToggleEnabled="true"
-            app:passwordToggleTint="@color/colorAccent">
-
-            <EditText
-                android:id="@+id/password"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="轮训请求时长"
-                android:imeActionId="6"
-                android:imeActionLabel="@string/action_sign_in_short"
-                android:imeOptions="actionUnspecified"
-                android:maxLines="1"
-                android:singleLine="true"
-                android:textColor="#000000" />
-
-        </android.support.design.widget.TextInputLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <Button
-                android:id="@+id/phone_sign_in_button"
+                android:id="@+id/button"
                 style="?android:textAppearanceSmall"
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"

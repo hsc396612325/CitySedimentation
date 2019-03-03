@@ -44,22 +44,6 @@
             android:orientation="vertical">
 
             <ImageView
-                android:id="@+id/iv_seek"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:layout_gravity="center"
-                android:layout_marginTop="10dp"
-                android:enabled="false"
-                android:src="@mipmap/ic_seek" />
-
-            <View
-                android:layout_width="30dp"
-                android:layout_height="1dp"
-                android:layout_gravity="center"
-                android:layout_marginTop="5dp"
-                android:background="#808080" />
-
-            <ImageView
                 android:id="@+id/iv_select"
                 android:layout_width="25dp"
                 android:layout_height="25dp"

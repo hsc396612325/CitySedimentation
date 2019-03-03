@@ -1,20 +1,25 @@
 package com.heshucheng.graduation.View;
 
 import android.graphics.Color;
-
+import android.util.Log;
 
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.components.LimitLine;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
+import com.github.mikephil.charting.renderer.XAxisRenderer;
+import com.google.android.exoplayer.C;
+import com.heshucheng.graduation.fragment.Coordinate;
 import com.heshucheng.graduation.utiles.TimeUtils;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -24,172 +29,127 @@ import java.util.List;
 
 public class ChartUtils {
 
-    public static int dayValue = 0;
-    public static int weekValue = 1;
-    public static int monthValue = 2;
+
+
     /**
      * 初始化图表
      *
-     * @param chart 原始图表
+     * @param
      * @return 初始化后的图表
      */
-    public static LineChart initChart(LineChart chart) {
-        // 不显示数据描述
-        chart.getDescription().setEnabled(false);
-        // 没有数据的时候，显示“暂无数据”
-        chart.setNoDataText("暂无数据");
-        // 不显示表格颜色
-        chart.setDrawGridBackground(false);
-        // 不可以缩放
-        chart.setScaleEnabled(false);
-        // 不显示y轴右边的值
-        chart.getAxisRight().setEnabled(false);
-        // 不显示图例
-        Legend legend = chart.getLegend();
-        legend.setEnabled(false);
-        // 向左偏移15dp，抵消y轴向右偏移的30dp
-        //chart.setExtraLeftOffset(-15);
-        XAxis xAxis = chart.getXAxis();
+    public static LineChart initChart(LineChart lineChart) {
+           XAxis xAxis;                //X轴
+          YAxis leftYAxis;            //左侧Y轴
+          YAxis rightYaxis;           //右侧Y轴
+           Legend legend;              //图例
+        /***图表设置***/
+        //是否展示网格线
+        lineChart.setDrawGridBackground(false);
+        //是否显示边界
+        lineChart.setDrawBorders(true);
+        //是否可以拖动
+        lineChart.setDragEnabled(false);
+        //是否有触摸事件
+        lineChart.setTouchEnabled(true);
+        //设置XY轴动画效果
+        lineChart.animateY(2500);
+        lineChart.animateX(1500);
 
-        // 不显示x轴
-        xAxis.setDrawAxisLine(true);
-        // 设置x轴数据的位置
+        /***XY轴的设置***/
+        xAxis = lineChart.getXAxis();
+        leftYAxis = lineChart.getAxisLeft();
+        rightYaxis = lineChart.getAxisRight();
+        //X轴设置显示位置在底部
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-        xAxis.setTextColor(Color.WHITE);
-        xAxis.setTextSize(12);
-        xAxis.setGridColor(Color.parseColor("#30FFFFFF"));
+        xAxis.setAxisMinimum(0f);
+        xAxis.setGranularity(1f);
+        //保证Y轴从0开始，不然会上移一点
+        leftYAxis.setAxisMinimum(0f);
+        rightYaxis.setAxisMinimum(0f);
 
-        // 设置x轴数据偏移量
-        xAxis.setYOffset(4);
-        YAxis yAxis = chart.getAxisLeft();
-        // 不显示y轴
-        yAxis.setDrawAxisLine(false);
+        /***折线图例 标签 设置***/
+        legend = lineChart.getLegend();
+        //设置显示类型，LINE CIRCLE SQUARE EMPTY 等等 多种方式，查看LegendForm 即可
+        legend.setForm(Legend.LegendForm.LINE);
+        legend.setTextSize(12f);
+        //显示位置 左下方
+        legend.setVerticalAlignment(Legend.LegendVerticalAlignment.BOTTOM);
+        legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.LEFT);
+        legend.setOrientation(Legend.LegendOrientation.HORIZONTAL);
+        //是否绘制在图表里面
+        legend.setDrawInside(false);
 
-        // 设置y轴数据的位置
-        yAxis.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART);
+        xAxis.setDrawGridLines(false);
+        rightYaxis.setDrawGridLines(false);
+        leftYAxis.setDrawGridLines(true);
+        leftYAxis.enableGridDashedLine(10f, 10f, 0f);
+        rightYaxis.setEnabled(false);
 
-        // 不从y轴发出横向直线
-        yAxis.setDrawGridLines(false);
-        yAxis.setTextColor(Color.WHITE);
-        yAxis.setTextSize(12);
+        lineChart.setXAxisRenderer(new MyXAxisRenderer(lineChart.getViewPortHandler(),lineChart.getXAxis(),lineChart.getTransformer(YAxis.AxisDependency.LEFT)));
+        lineChart.zoom(0f, 1f, 0, 0);
 
-        // 设置y轴数据偏移量
-        yAxis.setXOffset(15);
-        yAxis.setYOffset(-3);
-        yAxis.setAxisMinimum(0);
-
-        //Matrix matrix = new Matrix();
-        // x轴缩放1.5倍
-        // matrix.postScale(1.5f, 1f);
-        // 在图表动画显示之前进行缩放
-        //chart.getViewPortHandler().refresh(matrix, chart, false);
-        //x轴执行动画
-        //chart.animateX(2000);
-        chart.invalidate();
-        return chart;
+        return lineChart;
     }
 
-    /**
-     * 设置图表数据
-     *
-     * @param chart  图表
-     * @param values 数据
-     */
-    public static void setChartData(LineChart chart, List<Entry> values) {
-        LineDataSet lineDataSet;
-        if (chart.getData() != null && chart.getData().getDataSetCount() > 0) {
-            lineDataSet = (LineDataSet) chart.getData().getDataSetByIndex(0);
-            lineDataSet.setValues(values);
-            chart.getData().notifyDataChanged();
-            chart.notifyDataSetChanged();
-        } else {
-            lineDataSet = new LineDataSet(values, "");
-            // 设置曲线颜色
-            lineDataSet.setColor(Color.parseColor("#FFFFFF"));
-            // 设置平滑曲线
-            lineDataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);
-            // 不显示坐标点的小圆点
-            lineDataSet.setDrawCircles(false);
-            // 不显示坐标点的数据
-            lineDataSet.setDrawValues(false);
-            // 不显示定位线
-            lineDataSet.setHighlightEnabled(false);
 
-            LineData data = new LineData(lineDataSet);
-            chart.setData(data);
-            chart.invalidate();
+    public static void initLineDataSet(LineDataSet lineDataSet, int color, LineDataSet.Mode mode) {
+        lineDataSet.setColor(color);
+        lineDataSet.setCircleColor(color);
+        lineDataSet.setLineWidth(1f);
+        lineDataSet.setCircleRadius(3f);
+        //设置曲线值的圆点是实心还是空心
+        lineDataSet.setDrawCircleHole(false);
+        lineDataSet.setValueTextSize(10f);
+        //设置折线图填充
+        lineDataSet.setDrawFilled(true);
+        lineDataSet.setFormLineWidth(1f);
+        lineDataSet.setFormSize(15.f);
+        if (mode == null) {
+            //设置曲线展示为圆滑曲线（如果不设置则默认折线）
+            lineDataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);
+        } else {
+            lineDataSet.setMode(mode);
         }
     }
 
+
     /**
-     * 更新图表
+     * 展示曲线
      *
-     * @param chart     图表
-     * @param values    数据
-     * @param valueType 数据类型
+     * @param dataList 数据集合
+     * @param name     曲线名称
+     * @param color    曲线颜色
      */
-    public static void notifyDataSetChanged(LineChart chart, List<Entry> values, final int valueType) {
-        chart.getXAxis().setValueFormatter(new IAxisValueFormatter() {
+    public static void showLineChart(final List<Coordinate> dataList, int color, String name, LineChart chart) {
+        List<Entry> entries = new ArrayList<>();
+        for (int i = 0; i < dataList.size(); i++) {
+            Coordinate data = dataList.get(i);
+            /**
+             * 在此可查看 Entry构造方法，可发现 可传入数值 Entry(float x, float y)
+             * 也可传入Drawable， Entry(float x, float y, Drawable icon) 可在XY轴交点 设置Drawable图像展示
+             */
+            Entry entry = new Entry(i, (float) data.getY());
+            entries.add(entry);
+            Log.d("dddd", " " + entry);
+        }
+        XAxis xAxis = chart.getXAxis();
+        xAxis.setValueFormatter(new IAxisValueFormatter() {
             @Override
             public String getFormattedValue(float value, AxisBase axis) {
-                return xValuesProcess(valueType)[(int) value];
+                String tradeDate = dataList.get((int) value % dataList.size()).getX().substring(0,10)+"\n"+dataList.get((int) value % dataList.size()).getX().substring(11,19);
+                return tradeDate;
             }
         });
+
+        // 每一个LineDataSet代表一条线
+        LineDataSet lineDataSet = new LineDataSet(entries, name);
+        initLineDataSet(lineDataSet, color, LineDataSet.Mode.LINEAR);
+        LineData lineData = new LineData(lineDataSet);
+        chart.setData(lineData);
+
+        chart.notifyDataSetChanged();
         chart.invalidate();
-        setChartData(chart, values);
     }
-
-    /**
-     * x轴数据处理
-     *
-     * @param valueType 数据类型
-     * @return x轴数据
-     */
-    /**
-     * x轴数据处理
-     *
-     * @param valueType 数据类型
-     * @return x轴数据
-     */
-    private static String[] xValuesProcess(int valueType) {
-        String[] week = {"周日", "周一", "周二", "周三", "周四", "周五", "周六"};
-
-        if (valueType == dayValue) { // 今日
-            String[] dayValues = new String[7];
-            long currentTime = System.currentTimeMillis();
-            for (int i = 6; i >= 0; i--) {
-                dayValues[i] = TimeUtils.dateToString(currentTime, TimeUtils.dateFormat_day);
-                currentTime -= (3 * 60 * 60 * 1000);
-            }
-            return dayValues;
-
-        } else if (valueType == weekValue) { // 本周
-            String[] weekValues = new String[7];
-            Calendar calendar = Calendar.getInstance();
-            int currentWeek = calendar.get(Calendar.DAY_OF_WEEK);
-
-            for (int i = 6; i >= 0; i--) {
-                weekValues[i] = week[currentWeek - 1];
-                if (currentWeek == 1) {
-                    currentWeek = 7;
-                } else {
-                    currentWeek -= 1;
-                }
-            }
-            return weekValues;
-
-        } else if (valueType == monthValue) { // 本月
-            String[] monthValues = new String[7];
-            long currentTime = System.currentTimeMillis();
-            for (int i = 6; i >= 0; i--) {
-                monthValues[i] = TimeUtils.dateToString(currentTime, TimeUtils.dateFormat_month);
-                currentTime -= (4 * 24 * 60 * 60 * 1000);
-            }
-            return monthValues;
-        }
-        return new String[]{};
-    }
-
 
 }
 

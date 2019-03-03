@@ -1,7 +1,6 @@
 package com.heshucheng.graduation.mvp.model
 
 import android.content.Context
-import android.util.Log
 import com.baidu.location.*
 import com.baidu.mapapi.model.LatLng
 import com.baidu.mapapi.search.sug.SuggestionResult
@@ -15,6 +14,10 @@ import com.heshucheng.graduation.bean.detection.LocationBean
 import com.heshucheng.graduation.utiles.RxjavaObservable.BaiduLocationObservable
 import com.heshucheng.graduation.utiles.RxjavaObservable.BaiduSuggestionbservable
 import com.heshucheng.graduation.bean.MarkerBeas
+import com.heshucheng.graduation.mvp.model.gson.area.Area
+import com.heshucheng.graduation.mvp.model.gson.device_data.DeviceData
+import com.heshucheng.graduation.utiles.io_main
+import com.heshucheng.graduation.utiles.net.NetWork
 import io.reactivex.ObservableOnSubscribe
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -42,90 +45,85 @@ class DetectionModel {
 
     }
 
-    //获取市
-    fun loadProvinceData(): Observable<ArrayList<ProvinceInfoData>> {
-        //return NetWork.service.getCity(url).io_main()
+//    //获取市
+//    fun loadProvinceData(): Observable<ArrayList<ProvinceInfoData>> {
+//        //return NetWork.service.getCity(url).io_main()
+//
+//        return Observable
+//                .create(ObservableOnSubscribe<ArrayList<ProvinceInfoData>> { e ->
+//                    val str = getJson("Province.Json", App.context!!) //读取本地数据
+//                    val detail: ArrayList<ProvinceInfoData> = parseJsonData(str) //解析json890-=
+//                    e.onNext(detail)
+//                })
+//                .subscribeOn(Schedulers.newThread())
+//                .observeOn(AndroidSchedulers.mainThread())
+//
+//
+//    }
 
-        return Observable
-                .create(ObservableOnSubscribe<ArrayList<ProvinceInfoData>> { e ->
-                    val str = getJson("Province.Json", App.context!!) //读取本地数据
-                    val detail: ArrayList<ProvinceInfoData> = parseJsonData(str) //解析json890-=
-                    Log.d("aaaaa",""+str)
-                    Log.d("aaaaa",""+detail)
-                    e.onNext(detail)
-                })
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-
-
-    }
+    //    //读取文件中的数据
+//    private fun getJson(fileName: String, context: Context): String {
+//        //将json数据变成字符串
+//        val stringBuilder = StringBuilder()
+//        try {
+//            //获取assets资源管理器
+//            val assetManager = context.getAssets()
+//
+//            //通过管理器打开文件并读取
+//            val bf = BufferedReader(InputStreamReader(
+//                    assetManager.open(fileName)))
+//            var line = bf.readLine()
+//
+//            while (line != null) {
+//                stringBuilder.append(line)
+//                line = bf.readLine()
+//            }
+//        } catch (e: IOException) {
+//            e.printStackTrace()
+//        }
+//
+//        return stringBuilder.toString()
+//    }
+//
+//    //解析Json数据
+//    private fun parseJsonData(result: String): ArrayList<ProvinceInfoData> {
+//        val detail: ArrayList<ProvinceInfoData> = ArrayList<ProvinceInfoData>()
+//
+//        try {
+//            var data = JSONArray(result)
+//            var gson = Gson()
+//
+//            for (i in 0..(data.length() - 1)) {
+//                val entity: ProvinceInfoData = gson.fromJson(data.optJSONObject(i).toString(), ProvinceInfoData::class.java)
+//                detail.add(entity)
+//            }
+//        } catch (e: Exception) {
+//            e.printStackTrace()
+//        }
+//        return detail
+//    }
 
     //获取定位坐标
     fun loadLocation(): Observable<LocationBean> {
         return BaiduLocationObservable(mLocationClient)  //使用Rxjava对百度回调的接口进行了包装
     }
 
-    //搜索联想
-    fun loadSug(sug : String): Observable<SuggestionResult>{
+//    //搜索联想
+//    fun loadSug(sug : String): Observable<SuggestionResult>{
+//        return BaiduSuggestionbservable(sug) //使用Rxjava对百度sug的接口进行了包装
+//    }
 
+    fun getArea(apiKay:String?):Observable<Area>{
+        val url="devices"
 
-        return BaiduSuggestionbservable(sug) //使用Rxjava对百度sug的接口进行了包装
+        return  NetWork.service.getArea(url,apiKay).io_main()
     }
 
-    //获取标记点
-    fun loadMark() :Observable<List<MarkerBeas>>{
-        return Observable
-                .create({ e ->
-                    var marks =  ArrayList<MarkerBeas>();
-                    for(i in 0..3){
-                        var mark = MarkerBeas(LatLng(34.16096+i*0.1, 108.912437+i*0.1),i%2==0)
-                        marks.add(mark)
-                    }
-                    e.onNext(marks)
-                })
+    fun getEquipment(apiKay:String?,tag:String):Observable<Area>{
+        val url="devices?tag="+tag
+        return NetWork.service.getEquipment(url,apiKay).io_main()
     }
 
-    //读取文件中的数据
-    private fun getJson(fileName: String, context: Context): String {
-        //将json数据变成字符串
-        val stringBuilder = StringBuilder()
-        try {
-            //获取assets资源管理器
-            val assetManager = context.getAssets()
-
-            //通过管理器打开文件并读取
-            val bf = BufferedReader(InputStreamReader(
-                    assetManager.open(fileName)))
-            var line = bf.readLine()
-
-            while (line != null) {
-                stringBuilder.append(line)
-                line = bf.readLine()
-            }
-        } catch (e: IOException) {
-            e.printStackTrace()
-        }
-
-        return stringBuilder.toString()
-    }
-
-    //解析Json数据
-    private fun parseJsonData(result: String): ArrayList<ProvinceInfoData> {
-        val detail: ArrayList<ProvinceInfoData> = ArrayList<ProvinceInfoData>()
-
-        try {
-            var data = JSONArray(result)
-            var gson = Gson()
-
-            for (i in 0..(data.length() - 1)) {
-                val entity: ProvinceInfoData = gson.fromJson(data.optJSONObject(i).toString(), ProvinceInfoData::class.java)
-                detail.add(entity)
-            }
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-        return detail
-    }
 
 }
 

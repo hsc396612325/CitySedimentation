@@ -30,6 +30,7 @@ object NetWork {
 
         retrofit = Retrofit.Builder()
                 .client(okHttpClient)
+                .baseUrl("http://api.heclouds.com/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build()

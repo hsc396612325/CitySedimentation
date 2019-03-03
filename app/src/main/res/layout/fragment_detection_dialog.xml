@@ -1,16 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:text="详细信息"
+
+    android:layout_width="200dp"
+    android:layout_height="200dp"
+    android:background="#FFFFFF"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <LinearLayout
         android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:background="#FFFFFF"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="20dp"
         android:fitsSystemWindows="true"
+        android:layout_marginBottom="15dp"
         android:orientation="vertical">
 
-    <TextView
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:gravity="center"
-        android:textSize="20sp" />
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:text="设备名"
+            android:layout_marginTop="7dp"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/tv_id"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:text="设备id:"
+            android:layout_marginTop="7dp"
+            android:textSize="18sp" />
+        <TextView
+            android:id="@+id/tv_lat"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:text="经度"
+            android:layout_marginTop="7dp"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/tv_lon"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:text="纬度"
+            android:layout_marginTop="7dp"
+            android:textSize="18sp" />
+
+
+    </LinearLayout>
 </LinearLayout>
