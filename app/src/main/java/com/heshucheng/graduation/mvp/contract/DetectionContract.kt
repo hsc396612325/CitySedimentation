@@ -1,13 +1,9 @@
 package com.heshucheng.graduation.mvp.contract
 
-import com.baidu.mapapi.map.OverlayOptions
-import com.baidu.mapapi.search.sug.SuggestionResult
-import com.heshucheng.graduation.bean.MarkerBeas
-import com.heshucheng.graduation.bean.ProvinceInfoData
 import com.heshucheng.graduation.bean.detection.LocationBean
 import com.heshucheng.graduation.mvp.base.BasePresenter
 import com.heshucheng.graduation.mvp.base.BaseView
-import com.heshucheng.graduation.mvp.model.gson.area.Area
+import com.heshucheng.graduation.bean.gson.area.Area
 
 /**
  * Created by heshu on 2018/10/18.

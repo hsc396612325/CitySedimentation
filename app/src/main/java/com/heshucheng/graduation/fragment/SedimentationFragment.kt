@@ -10,26 +10,20 @@ import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.Toast
 import com.bigkoo.pickerview.builder.TimePickerBuilder
 import com.bigkoo.pickerview.listener.OnTimeSelectListener
 import com.bigkoo.pickerview.view.TimePickerView
-import com.github.mikephil.charting.data.Entry
 import com.heshucheng.graduation.R
-import com.heshucheng.graduation.R.id.*
 import com.heshucheng.graduation.View.ChartUtils
-import com.heshucheng.graduation.View.ChartUtils.initChart
-import com.heshucheng.graduation.activity.MainActivity
 import com.heshucheng.graduation.mvp.contract.SedimentationContract
-import com.heshucheng.graduation.mvp.model.gson.device_data.DeviceData
+import com.heshucheng.graduation.bean.gson.device_data.DeviceData
 import com.heshucheng.graduation.mvp.presenter.SedimentationPresenter
 import com.heshucheng.graduation.utiles.App
 import com.heshucheng.graduation.utiles.MainData.ApiKey
 import com.heshucheng.graduation.utiles.MainData.markRecord
 import com.heshucheng.graduation.utiles.MainData.marks
 import kotlinx.android.synthetic.main.fragment_sedimentation.*
-import kotlinx.android.synthetic.main.fragment_sedimentation.view.*
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -180,6 +174,7 @@ class SedimentationFragment : Fragment(), SedimentationContract.View {
     override fun showFault() {
         Toast.makeText(App.context, "数据请求失败", Toast.LENGTH_SHORT).show()
     }
+
 
 
 }

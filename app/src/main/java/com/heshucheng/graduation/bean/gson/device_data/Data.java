@@ -1,4 +1,4 @@
-package com.heshucheng.graduation.mvp.model.gson.device_data;
+package com.heshucheng.graduation.bean.gson.device_data;
 
 import java.util.List;
 

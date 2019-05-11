@@ -1,27 +1,18 @@
 package com.heshucheng.graduation.fragment
 
-import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.DialogInterface
-import android.content.Intent
 import android.graphics.Color
-import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.ColorDrawable
-import android.media.AudioRecord
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import com.baidu.location.d.j.A
-import com.baidu.location.d.j.v
 import com.baidu.mapapi.map.*
-import com.baidu.mapapi.map.BitmapDescriptorFactory.fromResource
 import com.baidu.mapapi.model.LatLng
 import com.baidu.mapapi.search.sug.SuggestionResult
 import com.bigkoo.pickerview.builder.OptionsPickerBuilder
@@ -29,17 +20,11 @@ import com.bigkoo.pickerview.listener.OnOptionsSelectListener
 import com.bigkoo.pickerview.view.OptionsPickerView
 import com.heshucheng.graduation.utiles.App
 import com.heshucheng.graduation.R
-import com.heshucheng.graduation.R.id.*
-import com.heshucheng.graduation.activity.MainActivity
-import com.heshucheng.graduation.adapter.SeekAdapter
 import com.heshucheng.graduation.bean.MarkerBeas
-import com.heshucheng.graduation.bean.ProvinceInfoData
 import com.heshucheng.graduation.bean.detection.LocationBean
 import com.heshucheng.graduation.mvp.contract.DetectionContract
-import com.heshucheng.graduation.mvp.model.gson.area.Area
-import com.heshucheng.graduation.mvp.model.gson.area.Devices
+import com.heshucheng.graduation.bean.gson.area.Area
 import com.heshucheng.graduation.mvp.presenter.DetectionPresenter
-import com.heshucheng.graduation.utiles.App.Companion.context
 import com.heshucheng.graduation.utiles.MainData.ApiKey
 import com.heshucheng.graduation.utiles.MainData.markRecord
 import com.heshucheng.graduation.utiles.MainData.marks
@@ -47,10 +32,6 @@ import kotlinx.android.synthetic.main.fragment_detection.*
 
 
 import com.jakewharton.rxbinding2.view.RxView
-import com.jakewharton.rxbinding2.widget.RxTextView
-import io.reactivex.android.schedulers.AndroidSchedulers
-import kotlinx.android.synthetic.main.fragment_detection_seek.*
-import java.util.*
 import java.util.concurrent.TimeUnit
 import kotlin.collections.ArrayList
 import kotlin.collections.HashSet
@@ -104,7 +85,8 @@ class DetectionFragment : Fragment(), DetectionContract.View {
                 })
 
         iv_select.setOnClickListener({ v ->
-            pvOptions?.show() //打开区域选择器
+            presenter.requestArea(ApiKey)
+
         })
 
 
@@ -118,7 +100,11 @@ class DetectionFragment : Fragment(), DetectionContract.View {
                 }
 
                 showMarker()
-                showDialog(marks.get(i))
+                if (marks.get(i) != null && marks.get(i).tit != null && marks.get(i).id != null && marks.get(i).normal != null && marks.get(i).latLne != null) {
+                    showDialog(marks.get(i))
+                } else {
+                    Toast.makeText(App.context, "数据为空", Toast.LENGTH_SHORT).show()
+                }
                 return false
             }
         })
@@ -209,8 +195,6 @@ class DetectionFragment : Fragment(), DetectionContract.View {
         pvOptions?.show()
     }
 
-    //搜索弹窗
-    @SuppressLint("CheckResult")
 //
 
 
@@ -232,9 +216,11 @@ class DetectionFragment : Fragment(), DetectionContract.View {
         val lon = contentView?.findViewById<TextView>(R.id.tv_lon)
 
         name?.setText("设备名: " + mark.tit)
-        id?.setText("设备id: " + mark.id)
-        lat?.setText("经度:   " + mark.latLne.latitude.toString().substring(0, 13))
-        lon?.setText("纬度:   " + mark.latLne.longitude.toString().substring(0, 13))
+        id?.setText("设备id: " + mark.id);
+        val s = if(mark.latLne.latitude.toString().length < 13)  mark.latLne.latitude.toString().length else 13
+        lat?.setText("经度:   " + mark.latLne.latitude.toString().substring(0, s))
+        val l =  if(mark.latLne.longitude.toString().length < 13 )  mark.latLne.longitude.toString().length else 13
+        lon?.setText("纬度:   " + mark.latLne.longitude.toString().substring(0, l))
     }
 
     private fun showApiKeyDialog() {
@@ -259,7 +245,6 @@ class DetectionFragment : Fragment(), DetectionContract.View {
 
                 }).show()
     }
-
 
 
     //显示点标记

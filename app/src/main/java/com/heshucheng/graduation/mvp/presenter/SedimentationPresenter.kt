@@ -19,6 +19,7 @@ class SedimentationPresenter(view: SedimentationContract.View) : SedimentationCo
                 .subscribe({ it ->
                     if (it != null) {
                        // Log.d("aaaa内容",""+it.data.datastreams[0].datapoints[0].value.lat)
+
                         sedimentationView.showDeviceData(it)
                     }
                 }, { e ->

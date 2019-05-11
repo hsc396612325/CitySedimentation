@@ -1,4 +1,4 @@
-package com.heshucheng.graduation.mvp.model.gson.area;
+package com.heshucheng.graduation.bean.gson.area;
 
 
 

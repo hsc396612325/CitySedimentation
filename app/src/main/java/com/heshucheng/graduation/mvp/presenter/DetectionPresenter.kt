@@ -50,10 +50,11 @@ class DetectionPresenter(view: DetectionContract.View) : DetectionContract.Prese
         detectionModel.getArea(apiKay)
                 .subscribe({ it ->
                     if (it != null) {
-                        Log.d("aaaa区域",""+it.data.devices[1].tags[1])
+                  //      Log.d("aaaa区域",""+it.data.devices[1].tags[1])
                         detectionView.showArea(it)
                     }
                 }, { e ->
+                    Log.d("aaaa区域",""+e)
                     detectionView.showApiKeyFault()
                 })
     }

@@ -1,30 +1,15 @@
 package com.heshucheng.graduation.mvp.model
 
-import android.content.Context
 import com.baidu.location.*
-import com.baidu.mapapi.model.LatLng
-import com.baidu.mapapi.search.sug.SuggestionResult
 import com.baidu.mapapi.search.sug.SuggestionSearch
-import com.google.gson.Gson
 import io.reactivex.Observable
 import com.heshucheng.graduation.utiles.App
-import com.heshucheng.graduation.bean.ProvinceInfoData
 
 import com.heshucheng.graduation.bean.detection.LocationBean
 import com.heshucheng.graduation.utiles.RxjavaObservable.BaiduLocationObservable
-import com.heshucheng.graduation.utiles.RxjavaObservable.BaiduSuggestionbservable
-import com.heshucheng.graduation.bean.MarkerBeas
-import com.heshucheng.graduation.mvp.model.gson.area.Area
-import com.heshucheng.graduation.mvp.model.gson.device_data.DeviceData
+import com.heshucheng.graduation.bean.gson.area.Area
 import com.heshucheng.graduation.utiles.io_main
 import com.heshucheng.graduation.utiles.net.NetWork
-import io.reactivex.ObservableOnSubscribe
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
-import org.json.JSONArray
-import java.io.BufferedReader
-import java.io.IOException
-import java.io.InputStreamReader
 
 
 /**

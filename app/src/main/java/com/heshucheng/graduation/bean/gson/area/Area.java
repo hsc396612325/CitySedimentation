@@ -1,10 +1,10 @@
-package com.heshucheng.graduation.mvp.model.gson.device_data;
+package com.heshucheng.graduation.bean.gson.area;
 
 /**
  * Created by heshu on 2019/2/19.
  */
 
-public class DeviceData {
+public class Area {
     private int errno;
     private Data data;
     private String error;
@@ -28,5 +28,4 @@ public class DeviceData {
     public String getError() {
         return error;
     }
-
 }

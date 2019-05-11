@@ -1,4 +1,4 @@
-package com.heshucheng.graduation.mvp.model.gson.area;
+package com.heshucheng.graduation.bean.gson.area;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -19,7 +19,7 @@ public class Devices {
     private Location location;
     private String id;
     @SerializedName("auth_info")
-    private String authInfo;
+    private AuthInfo authInfo;
     private String title;
     private List<String> tags;
 
@@ -65,10 +65,10 @@ public class Devices {
         return id;
     }
 
-    public void setAuthInfo(String authInfo) {
+    public void setAuthInfo(AuthInfo authInfo) {
         this.authInfo = authInfo;
     }
-    public String getAuthInfo() {
+    public  AuthInfo getAuthInfo() {
         return authInfo;
     }
 

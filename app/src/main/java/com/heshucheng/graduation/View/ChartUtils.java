@@ -1,6 +1,7 @@
 package com.heshucheng.graduation.View;
 
 import android.graphics.Color;
+import android.media.AudioRecord;
 import android.util.Log;
 
 
@@ -21,6 +22,7 @@ import com.heshucheng.graduation.utiles.TimeUtils;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -149,6 +151,7 @@ public class ChartUtils {
 
         chart.notifyDataSetChanged();
         chart.invalidate();
+
     }
 
 }

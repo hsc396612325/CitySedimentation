@@ -1,7 +1,7 @@
 package com.heshucheng.graduation.utiles.net
 
-import com.heshucheng.graduation.mvp.model.gson.area.Area
-import com.heshucheng.graduation.mvp.model.gson.device_data.DeviceData
+import com.heshucheng.graduation.bean.gson.area.Area
+import com.heshucheng.graduation.bean.gson.device_data.DeviceData
 
 import io.reactivex.Observable
 import retrofit2.http.GET

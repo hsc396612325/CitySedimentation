@@ -1,6 +1,6 @@
 package com.heshucheng.graduation.mvp.model
 
-import com.heshucheng.graduation.mvp.model.gson.device_data.DeviceData
+import com.heshucheng.graduation.bean.gson.device_data.DeviceData
 import com.heshucheng.graduation.utiles.io_main
 import com.heshucheng.graduation.utiles.net.NetWork
 import io.reactivex.Observable
