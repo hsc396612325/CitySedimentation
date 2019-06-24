@@ -1,12 +1,21 @@
+/**
+ * Copyright 2019 bejson.com
+ */
 package com.heshucheng.graduation.bean.gson.device_data;
 
-/**
- * Created by heshu on 2019/2/19.
- */
 
+import java.util.Date;
+
+/**
+ * Auto-generated: 2019-06-01 0:15:10
+ *
+ * @author bejson.com (i@bejson.com)
+ * @website http://www.bejson.com/java2pojo/
+ */
 public class Datapoints {
+
     private String at;
-    private Value value;
+    private double value;
     public void setAt(String at) {
         this.at = at;
     }
@@ -14,10 +23,10 @@ public class Datapoints {
         return at;
     }
 
-    public void setValue(Value value) {
+    public void setValue(double value) {
         this.value = value;
     }
-    public Value getValue() {
+    public double getValue() {
         return value;
     }
 

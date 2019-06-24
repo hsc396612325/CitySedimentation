@@ -29,6 +29,5 @@ interface ApiService{
      * 获取设备信息
      */
     @GET
-    @Headers("api-key: AeKs7=G8IdEIZGCmZ=RLCUwtvr8=")
     fun getDeviceData(@Url url:String,@Header("api-key") api_key:String?):Observable<DeviceData>
 }

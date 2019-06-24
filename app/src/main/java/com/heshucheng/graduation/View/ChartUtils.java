@@ -15,6 +15,9 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
+import com.github.mikephil.charting.formatter.IFillFormatter;
+import com.github.mikephil.charting.interfaces.dataprovider.LineDataProvider;
+import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.renderer.XAxisRenderer;
 import com.google.android.exoplayer.C;
 import com.heshucheng.graduation.fragment.Coordinate;
@@ -30,7 +33,10 @@ import java.util.List;
  */
 
 public class ChartUtils {
-
+    private static XAxis xAxis;                //X轴
+    private static YAxis leftYAxis;            //左侧Y轴
+    private static YAxis rightYaxis;           //右侧Y轴
+    private static Legend legend;              //图例
 
 
     /**
@@ -40,10 +46,7 @@ public class ChartUtils {
      * @return 初始化后的图表
      */
     public static LineChart initChart(LineChart lineChart) {
-           XAxis xAxis;                //X轴
-          YAxis leftYAxis;            //左侧Y轴
-          YAxis rightYaxis;           //右侧Y轴
-           Legend legend;              //图例
+
         /***图表设置***/
         //是否展示网格线
         lineChart.setDrawGridBackground(false);
@@ -66,8 +69,8 @@ public class ChartUtils {
         xAxis.setAxisMinimum(0f);
         xAxis.setGranularity(1f);
         //保证Y轴从0开始，不然会上移一点
-        leftYAxis.setAxisMinimum(0f);
-        rightYaxis.setAxisMinimum(0f);
+//        leftYAxis.setAxisMinimum(0f);
+//        rightYaxis.setAxisMinimum(0f);
 
         /***折线图例 标签 设置***/
         legend = lineChart.getLegend();
@@ -87,8 +90,9 @@ public class ChartUtils {
         leftYAxis.enableGridDashedLine(10f, 10f, 0f);
         rightYaxis.setEnabled(false);
 
-        lineChart.setXAxisRenderer(new MyXAxisRenderer(lineChart.getViewPortHandler(),lineChart.getXAxis(),lineChart.getTransformer(YAxis.AxisDependency.LEFT)));
+        lineChart.setXAxisRenderer(new MyXAxisRenderer(lineChart.getViewPortHandler(), lineChart.getXAxis(), lineChart.getTransformer(YAxis.AxisDependency.LEFT)));
         lineChart.zoom(0f, 1f, 0, 0);
+
 
         return lineChart;
     }
@@ -106,6 +110,13 @@ public class ChartUtils {
         lineDataSet.setDrawFilled(true);
         lineDataSet.setFormLineWidth(1f);
         lineDataSet.setFormSize(15.f);
+
+        lineDataSet.setFillFormatter(new IFillFormatter() {
+            @Override
+            public float getFillLinePosition(ILineDataSet dataSet, LineDataProvider dataProvider) {
+                return leftYAxis.getAxisMinimum();
+            }
+        });
         if (mode == null) {
             //设置曲线展示为圆滑曲线（如果不设置则默认折线）
             lineDataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);
@@ -138,7 +149,7 @@ public class ChartUtils {
         xAxis.setValueFormatter(new IAxisValueFormatter() {
             @Override
             public String getFormattedValue(float value, AxisBase axis) {
-                String tradeDate = dataList.get((int) value % dataList.size()).getX().substring(0,10)+"\n"+dataList.get((int) value % dataList.size()).getX().substring(11,19);
+                String tradeDate = dataList.get((int) value % dataList.size()).getX().substring(0, 10) + "\n" + dataList.get((int) value % dataList.size()).getX().substring(11, 19);
                 return tradeDate;
             }
         });

@@ -1,11 +1,15 @@
+/**
+ * Copyright 2019 bejson.com
+ */
 package com.heshucheng.graduation.bean.gson.device_data;
-
 import java.util.List;
 
 /**
- * Created by heshu on 2019/2/19.
+ * Auto-generated: 2019-06-01 0:15:10
+ *
+ * @author bejson.com (i@bejson.com)
+ * @website http://www.bejson.com/java2pojo/
  */
-
 public class Data {
 
     private int count;
@@ -25,4 +29,3 @@ public class Data {
     }
 
 }
-

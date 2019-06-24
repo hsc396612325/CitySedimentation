@@ -49,6 +49,7 @@ class DetectionPresenter(view: DetectionContract.View) : DetectionContract.Prese
     override fun requestArea(apiKay:String?) {
         detectionModel.getArea(apiKay)
                 .subscribe({ it ->
+                    Log.d("aaaa区域","sssss")
                     if (it != null) {
                   //      Log.d("aaaa区域",""+it.data.devices[1].tags[1])
                         detectionView.showArea(it)
@@ -64,7 +65,7 @@ class DetectionPresenter(view: DetectionContract.View) : DetectionContract.Prese
                 .subscribe({ it ->
                     if (it != null) {
                         detectionView.showEquipment(it)
-                        Log.d("aaaa设备",""+it.data.devices[0].id);
+                       // Log.d("aaaa设备",""+it.data.devices[0].id);
                     }
                 }, { e ->
                     detectionView.showFault()

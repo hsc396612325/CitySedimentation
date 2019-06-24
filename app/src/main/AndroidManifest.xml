@@ -56,9 +56,6 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".activity.SettingActivity" />
-        <activity android:name=".activity.RegisterActivity" />
-
     </application>
 
 </manifest>

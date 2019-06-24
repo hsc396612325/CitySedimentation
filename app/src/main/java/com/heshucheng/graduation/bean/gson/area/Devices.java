@@ -18,8 +18,8 @@ public class Devices {
     private boolean online;
     private Location location;
     private String id;
-    @SerializedName("auth_info")
-    private AuthInfo authInfo;
+//    @SerializedName("auth_info")
+//    private AuthInfo authInfo;
     private String title;
     private List<String> tags;
 
@@ -65,12 +65,12 @@ public class Devices {
         return id;
     }
 
-    public void setAuthInfo(AuthInfo authInfo) {
-        this.authInfo = authInfo;
-    }
-    public  AuthInfo getAuthInfo() {
-        return authInfo;
-    }
+//    public void setAuthInfo(AuthInfo authInfo) {
+//        this.authInfo = authInfo;
+//    }
+//    public  AuthInfo getAuthInfo() {
+//        return authInfo;
+//    }
 
     public void setTitle(String title) {
         this.title = title;

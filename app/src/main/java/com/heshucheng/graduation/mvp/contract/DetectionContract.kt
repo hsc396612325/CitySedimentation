@@ -11,23 +11,26 @@ import com.heshucheng.graduation.bean.gson.area.Area
 interface DetectionContract{
 
     interface View :BaseView<Presenter>{
+        //显示定位
         fun acquireLocation(locationBean :LocationBean)
+
+        //错误回调
         fun showFault()
-//        fun showProvinceData( ProvinceInfoDataItem: ArrayList<ProvinceInfoData>)
-//        fun showSug(sug:SuggestionResult)
 
+        //显示区域
         fun showArea(area: Area)
+        //api正确的回调
         fun showApiKeyFault()
-
+        //显示设备
         fun showEquipment(area: Area)
     }
 
     interface Presenter: BasePresenter {
-//        fun requestProvinceData()
+//     请求定位
         fun requestLocation()
-//        fun requestSug(sug :String)
-
+       // 请求区域
         fun requestArea(apiKay:String?)
+        //群殴灭火器设备
         fun requestEquipment(apiKay:String?,tag:String)
 
 

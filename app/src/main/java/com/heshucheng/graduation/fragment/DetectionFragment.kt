@@ -66,6 +66,7 @@ class DetectionFragment : Fragment(), DetectionContract.View {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        //初始化控件
         initView(view)
 
     }
@@ -78,18 +79,21 @@ class DetectionFragment : Fragment(), DetectionContract.View {
         builder.zoom(18.0f);
         mBaiduMap?.setMapStatus(MapStatusUpdateFactory.newMapStatus(builder.build()))
 
+        //定位的点击事件
         RxView.clicks(cvLocation)
                 .throttleFirst(1, TimeUnit.SECONDS) //功能防抖，即1s内只发送第1次点击按钮的事件
                 .subscribe({ e ->
                     presenter.requestLocation()
                 })
 
+        //选择区域的点击事件
         iv_select.setOnClickListener({ v ->
             presenter.requestArea(ApiKey)
 
         })
 
 
+        //点标记点击事件
         mBaiduMap?.setOnMarkerClickListener(object : BaiduMap.OnMarkerClickListener {
             override fun onMarkerClick(p0: Marker?): Boolean {
                 val i = Integer.parseInt(p0?.title)
@@ -101,6 +105,7 @@ class DetectionFragment : Fragment(), DetectionContract.View {
 
                 showMarker()
                 if (marks.get(i) != null && marks.get(i).tit != null && marks.get(i).id != null && marks.get(i).normal != null && marks.get(i).latLne != null) {
+                    //显示点标记弹窗
                     showDialog(marks.get(i))
                 } else {
                     Toast.makeText(App.context, "数据为空", Toast.LENGTH_SHORT).show()
@@ -171,6 +176,7 @@ class DetectionFragment : Fragment(), DetectionContract.View {
 
         pvOptions = OptionsPickerBuilder(this.context, OnOptionsSelectListener { options1, options2, options3, v ->
             //返回的分别是三个级别的选中位置
+            //点击事件回调
             val tx = area[options1]
             Log.d("txxx", tx)
             presenter.requestEquipment(ApiKey, tx)
@@ -217,9 +223,9 @@ class DetectionFragment : Fragment(), DetectionContract.View {
 
         name?.setText("设备名: " + mark.tit)
         id?.setText("设备id: " + mark.id);
-        val s = if(mark.latLne.latitude.toString().length < 13)  mark.latLne.latitude.toString().length else 13
+        val s = if (mark.latLne.latitude.toString().length < 13) mark.latLne.latitude.toString().length else 13
         lat?.setText("经度:   " + mark.latLne.latitude.toString().substring(0, s))
-        val l =  if(mark.latLne.longitude.toString().length < 13 )  mark.latLne.longitude.toString().length else 13
+        val l = if (mark.latLne.longitude.toString().length < 13) mark.latLne.longitude.toString().length else 13
         lon?.setText("纬度:   " + mark.latLne.longitude.toString().substring(0, l))
     }
 
@@ -267,9 +273,16 @@ class DetectionFragment : Fragment(), DetectionContract.View {
 
     //显示区域
     override fun showArea(area: Area) {
+//        Log.d("ssss",""+area.data);
+//        if (area == null || area.data == null || area.data.devices == null) {
+//            return
+//        }
+
         for (device in area.data.devices) {
-            for (str in device.tags) {
-                AreaSet.add(str)
+            if (device.tags != null) {
+                for (str in device.tags) {
+                    AreaSet.add(str)
+                }
             }
         }
 

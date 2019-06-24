@@ -15,6 +15,7 @@ import com.bigkoo.pickerview.builder.TimePickerBuilder
 import com.bigkoo.pickerview.listener.OnTimeSelectListener
 import com.bigkoo.pickerview.view.TimePickerView
 import com.heshucheng.graduation.R
+import com.heshucheng.graduation.R.id.*
 import com.heshucheng.graduation.View.ChartUtils
 import com.heshucheng.graduation.mvp.contract.SedimentationContract
 import com.heshucheng.graduation.bean.gson.device_data.DeviceData
@@ -28,7 +29,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 /**
- * Created by heshu on 2018/10/18.
+ * 展示
  */
 class SedimentationFragment : Fragment(), SedimentationContract.View {
     private val presenter: SedimentationPresenter = SedimentationPresenter(this);
@@ -89,7 +90,7 @@ class SedimentationFragment : Fragment(), SedimentationContract.View {
         }
 
         bt.setOnClickListener({ v ->
-            Log.d("sss", "111111111")
+
             if (timeEndStr != null && timeEndStr != null && limitStr != null) {
                 presenter.requestDeviceData(ApiKey, marks.get(markRecord).id, timeStartStr, timeEndStr, limitStr)
             } else {
@@ -99,6 +100,9 @@ class SedimentationFragment : Fragment(), SedimentationContract.View {
     }
 
 
+    /**
+     * 选择器
+     */
     private fun initTimePicker() {
         val startDate = Calendar.getInstance()
         val endDate = Calendar.getInstance()
@@ -157,13 +161,30 @@ class SedimentationFragment : Fragment(), SedimentationContract.View {
         val values = ArrayList<Coordinate>()
         val values2 = ArrayList<Coordinate>()
         val values3 = ArrayList<Coordinate>()
-
-        for (data in deviceDate.data.datastreams[0].datapoints) {
-
-            values.add(Coordinate(data.value.lat, data.at))
-            values2.add(Coordinate(data.value.lon, data.at))
-            values3.add(Coordinate(data.value.ele, data.at))
+        Log.d("sss","data:"+deviceDate.data +",error:"+deviceDate.error +",errno:" +deviceDate.errno)
+        Log.d("sss", "111111111"+ ApiKey)
+        for( d in deviceDate.data.datastreams){
+            if(d.id .equals("U__D")){ //纬度
+                for (data in d.datapoints){
+                    values.add(Coordinate(data.value,data.at.toString()))
+                }
+            }else if(d.id .equals("N__S")){//经度
+                for (data in d.datapoints){
+                    values2.add(Coordinate(data.value,data.at.toString()))
+                }
+            }else if(d.id .equals("E__W")){ //高度
+                for (data in d.datapoints){
+                    values3.add(Coordinate(data.value,data.at.toString()))
+                }
+            }
         }
+
+        //for (data in deviceDate.data.datastreams[0].datapoints) {
+//
+//            values.add(Coordinate(data.value.lat, data.at))
+//            values2.add(Coordinate(data.value.lon, data.at))
+//            values3.add(Coordinate(data.value.ele, data.at))
+//        }
 
 
         ChartUtils.showLineChart(values, Color.CYAN, "纬度变化", chart)

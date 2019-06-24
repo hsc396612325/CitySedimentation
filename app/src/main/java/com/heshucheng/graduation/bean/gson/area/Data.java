@@ -14,6 +14,7 @@ public class Data {
 
     @SerializedName("per_page")
     private int perPage;
+
     private List<Devices> devices;
     @SerializedName("total_count")
     private int totalCount;

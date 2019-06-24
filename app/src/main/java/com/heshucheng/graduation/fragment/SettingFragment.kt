@@ -15,7 +15,7 @@ import com.heshucheng.graduation.utiles.MainData
 import kotlinx.android.synthetic.main.fragment_setting.*
 
 /**
- * Created by heshu on 2018/10/18.
+ * 关于界面
  */
 class SettingFragment : Fragment(), MineContract.View {
     private val presenter: MinePresenter = MinePresenter(this)

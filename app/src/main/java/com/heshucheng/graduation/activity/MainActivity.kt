@@ -36,9 +36,14 @@ class MainActivity : AppCompatActivity() {
 
         super.onCreate(savedInstanceState)
 
+        //加载主界面
         setContentView(R.layout.activity_main)
-       initPermission()
+
+        //初始化权限
+        initPermission()
+        //初始化标题
         initToolbar()
+        //初始控件
         initView()
         Log.d("sss","ss"+getApplicationContext());
         SDKInitializer.initialize(getApplicationContext())
